@@ -1,0 +1,23 @@
+{
+  "id": "5173957",
+  "name": "NCM-Gamepad",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "适配手柄操作，更加简约的网易云音乐",
+  "glyphs": [
+    {
+      "icon_id": "47523199",
+      "name": "setting",
+      "font_class": "setting",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "47523198",
+      "name": "search",
+      "font_class": "search",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    }
+  ]
+}
