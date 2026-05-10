@@ -1,112 +1,35 @@
 <script lang="ts" setup>
-import { useGamepadInputCallback } from "@renderer/hooks/gamepad";
-import { onUnmounted } from "vue";
+import { onMounted } from "vue";
+import focusManager from "@renderer/core/gamepad/focus/focusManager";
+import TabBar from "./components/TabBar/index.vue";
+import { prefixName as tabBarPrefixName } from "./components/TabBar/config.data";
 
-// confirm
-const confirm = () => {
-  console.log("init confirm");
+// 初始化数据
+const initData = () => {
+  focusManager.setFocus(tabBarPrefixName + "1");
 };
 
-// back
-const back = () => {
-  console.log("init back");
-};
-
-// secondary
-const secondary = () => {
-  console.log("init secondary");
-};
-
-// option
-const option = () => {
-  console.log("init option");
-};
-
-// up
-const up = () => {
-  console.log("init up");
-};
-
-// down
-const down = () => {
-  console.log("init down");
-};
-
-// left
-const left = () => {
-  console.log("init left");
-};
-
-// right
-const right = () => {
-  console.log("init right");
-};
-
-// lb
-const lb = () => {
-  console.log("init lb");
-};
-
-// rb
-const rb = () => {
-  console.log("init rb");
-};
-
-// lt
-const lt = () => {
-  console.log("init lt");
-};
-
-// rt
-const rt = () => {
-  console.log("init rt");
-};
-
-// view
-const view = () => {
-  console.log("init view");
-};
-
-// menu
-const menu = () => {
-  console.log("init menu");
-};
-
-// share
-const share = () => {
-  console.log("init share");
-};
-
-const { unsubscribe } = useGamepadInputCallback("home", {
-  confirm,
-  back,
-  secondary,
-  option,
-  up,
-  down,
-  left,
-  right,
-  lb,
-  rb,
-  lt,
-  rt,
-  view,
-  menu,
-  share,
-});
-
-onUnmounted(() => {
-  unsubscribe();
+onMounted(() => {
+  initData();
 });
 </script>
 
 <template>
-  <div class="home-wrap">
-    <span>123</span>
+  <div class="home">
+    <div class="header">
+      <TabBar />
+    </div>
   </div>
 </template>
 
 <style lang="less" scoped>
-.home-wrap {
+.home {
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+  }
 }
 </style>

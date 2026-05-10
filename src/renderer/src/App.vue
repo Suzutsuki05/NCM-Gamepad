@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import BasicLayouts from "./layouts/BasicLayouts.vue";
-
-import { gamepadInput } from "./core/gamepad/input";
+import { gamepadInput } from "./core/gamepad/input/inputManager";
 
 // TODO del
 // import Versions from "./components/Versions.vue";
@@ -13,8 +12,21 @@ const init = () => {
   gamepadInput.start();
 };
 
+// 变更缩放比例
+const updateScale = () => {
+  const BASE_WIDTH = 1280;
+  const scale = window.innerWidth / BASE_WIDTH;
+  document.documentElement.style.setProperty("--scale", scale.toString());
+};
+
 onMounted(() => {
   init();
+  updateScale();
+  window.addEventListener("resize", updateScale);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateScale);
 });
 </script>
 
@@ -23,3 +35,12 @@ onMounted(() => {
     <BasicLayouts />
   </div>
 </template>
+
+<style lang="less" scoped>
+#app {
+  width: 1280px;
+  min-height: 100vh;
+  transform-origin: top left;
+  transform: scale(var(--scale));
+}
+</style>

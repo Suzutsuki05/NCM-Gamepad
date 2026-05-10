@@ -1,15 +1,14 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="main-layouts-wrap">
+  <div class="main-layouts">
     <RouterView />
   </div>
 </template>
 
 <style lang="less" scoped>
-.main-layouts-wrap {
+.main-layouts {
   min-height: 100vh;
-
-  border: 1px solid red;
+  background: #292c2b;
 }
 </style>
