@@ -1,12 +1,33 @@
 <script lang="ts" setup>
-import { onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
 import TabBar from "./components/TabBar/index.vue";
-import { prefixName as tabBarPrefixName } from "./components/TabBar/config.data";
+import TabPane from "./components/TabPane/index.vue";
+import {
+  prefixName as tabBarPrefixName,
+  tabsList,
+} from "./components/TabBar/config.data";
+
+// 当前选中tab
+const selectedTab = ref<string>("");
+
+// 设置选中tab
+watch(
+  () => focusManager.currentFocusId.value,
+  (focusId) => {
+    if (
+      tabsList.findIndex((item) => tabBarPrefixName + item.key === focusId) ===
+      -1
+    )
+      return;
+    selectedTab.value = focusId;
+  },
+);
 
 // 初始化数据
 const initData = () => {
-  focusManager.setFocus(tabBarPrefixName + "1");
+  // 聚焦"立即聆听"
+  focusManager.setFocus(tabBarPrefixName + "listen-now");
 };
 
 onMounted(() => {
@@ -17,7 +38,10 @@ onMounted(() => {
 <template>
   <div class="home">
     <div class="header">
-      <TabBar />
+      <TabBar :selectedTab="selectedTab" />
+    </div>
+    <div class="content">
+      <TabPane :selectedTab="selectedTab" />
     </div>
   </div>
 </template>

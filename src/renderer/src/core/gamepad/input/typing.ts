@@ -35,11 +35,15 @@ export type ActionMap = Set<Action>;
 /**
  * 订阅者
  * @description name 订阅者名称
- * @description callback 订阅的回调方法
+ * @description callback 订阅的回调方法, 返回 true 表示事件已经被消费
+ * @description enabled 当前订阅者是否可处理输入
+ * @description priority 订阅优先级, 值越大越先触发
  */
 export interface Subscriber {
   name: string;
-  callback: (state: InputState) => void;
+  callback: (state: InputState) => boolean;
+  enabled?: () => boolean;
+  priority?: number;
 }
 
 /**

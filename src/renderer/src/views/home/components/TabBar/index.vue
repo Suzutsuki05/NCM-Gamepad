@@ -1,16 +1,19 @@
 <script lang="ts" setup>
-import { ref, watch, onUnmounted } from "vue";
+import { onUnmounted } from "vue";
 import { useInputCallback } from "@renderer/hooks/gamepad";
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
 import { prefixName, tabsList } from "./config.data";
 
 const { inputCallback, unsubscribe } = useInputCallback("tab-bar");
 
-// 当前选中的tab
-const selectedTab = ref<string>("");
+defineProps<{
+  selectedTab: string;
+}>();
 
 const left = () => {
   focusManager.move("left");
+
+  // console.log("tab-bar left");
 };
 
 const right = () => {
@@ -20,16 +23,6 @@ const right = () => {
 const down = () => {
   focusManager.move("down");
 };
-
-// 设置选中的tab
-watch(
-  () => focusManager.currentFocusId.value,
-  (focusId) => {
-    if (tabsList.findIndex((item) => prefixName + item.key === focusId) === -1)
-      return;
-    selectedTab.value = focusId;
-  },
-);
 
 inputCallback({
   left,

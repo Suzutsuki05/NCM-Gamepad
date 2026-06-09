@@ -1,80 +1,64 @@
 import { gamepadInput } from "@renderer/core/gamepad/input/inputManager";
-import type { InputState } from "@renderer/core/gamepad/input/typing";
+import type { Action, InputState } from "@renderer/core/gamepad/input/typing";
 import type { FocusDirection } from "@renderer/core/gamepad/focus/typing";
 
-interface Operation {
-  confirm?: () => any;
-  back?: () => any;
-  secondary?: () => any;
-  option?: () => any;
-  up?: () => any;
-  down?: () => any;
-  left?: () => any;
-  right?: () => any;
-  lb?: () => any;
-  rb?: () => any;
-  lt?: () => any;
-  rt?: () => any;
-  view?: () => any;
-  menu?: () => any;
-  share?: () => any;
+interface Operation extends Partial<Record<Action, () => unknown>> {}
+
+interface UseInputCallbackOptions {
+  enabled?: () => boolean;
+  priority?: number;
 }
 
-export const useInputCallback = (name: string) => {
+const actionOrder: Action[] = [
+  "confirm",
+  "back",
+  "secondary",
+  "option",
+  "up",
+  "down",
+  "left",
+  "right",
+  "lb",
+  "rb",
+  "lt",
+  "rt",
+  "view",
+  "menu",
+  "share",
+];
+
+export const useInputCallback = (
+  name: string,
+  options: UseInputCallbackOptions = {},
+) => {
+  const { enabled, priority = 0 } = options;
+
   // 手柄输入回调
   const inputCallback = (operation: Operation) => {
-    const {
-      confirm,
-      back,
-      secondary,
-      option,
-      up,
-      down,
-      left,
-      right,
-      lb,
-      rb,
-      lt,
-      rt,
-      view,
-      menu,
-      share,
-    } = operation;
-
     // TODO 适配组合键
+    // TODO 适配长按有规律的持续触发
+    // TODO 命名 onLeft
 
     // 回调
     const callback = (state: InputState) => {
-      // 交互键
-      if (state.justPressed.has("confirm")) return confirm && confirm();
-      if (state.justPressed.has("back")) return back && back();
-      if (state.justPressed.has("secondary")) return secondary && secondary();
-      if (state.justPressed.has("option")) return option && option();
+      for (const action of actionOrder) {
+        const handler = operation[action];
 
-      // 方向键
-      if (state.justPressed.has("up")) return up && up();
-      if (state.justPressed.has("down")) return down && down();
-      if (state.justPressed.has("left")) return left && left();
-      if (state.justPressed.has("right")) return right && right();
+        if (!state.justPressed.has(action) || !handler) continue;
 
-      // 肩键
-      if (state.justPressed.has("lb")) return lb && lb();
-      if (state.justPressed.has("rb")) return rb && rb();
+        handler();
+        return true;
+      }
 
-      // 扳机键
-      if (state.justPressed.has("lt")) return lt && lt();
-      if (state.justPressed.has("rt")) return rt && rt();
-
-      // 功能键
-      if (state.justPressed.has("view")) return view && view();
-      if (state.justPressed.has("menu")) return menu && menu();
-      if (state.justPressed.has("share")) return share && share();
+      return false;
     };
 
     // 自动订阅
     gamepadInput.subscribe({
       name,
       callback,
+      enabled,
+      priority,
     });
   };
 

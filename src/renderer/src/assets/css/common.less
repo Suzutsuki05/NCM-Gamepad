@@ -1,0 +1,34 @@
+// 强制换行
+.line {
+  word-break: break-all !important; // 只对英文起作用，以字母作为换行依据
+  word-wrap: break-word !important; // 只对英文起作用，以单词作为换行依据
+  overflow-wrap: break-word !important; // css3新语法，相当于word-wrap: break-word;
+  white-space: pre-wrap !important; // 只对中文起作用，强制换行23
+}
+
+// 一行超长隐藏
+.line-ellipsis {
+  white-space: nowrap; //文本强制不换行；
+  text-overflow: ellipsis; //文本溢出显示省略号；
+  overflow: hidden; //溢出的部分隐藏；
+}
+
+// 两行超长隐藏
+.two-line-ellipsis {
+  overflow: hidden; // 超长隐藏
+  text-overflow: ellipsis; //文本溢出显示省略号；
+  display: -webkit-box; // 设置弹性伸缩盒子
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; // 限制显示行数
+  word-break: break-all; // 只对英文起作用，以字母作为换行依据
+}
+
+// 三行超长隐藏
+.three-line-ellipsis {
+  overflow: hidden; // 超长隐藏
+  text-overflow: ellipsis; //文本溢出显示省略号；
+  display: -webkit-box; // 设置弹性伸缩盒子
+  -webkit-box-orient: vertical; // 设置或检索伸缩盒对象的子元素的排列
+  -webkit-line-clamp: 3; // 限制显示行数
+  word-break: break-all; // 只对英文起作用，以字母作为换行依据
+}

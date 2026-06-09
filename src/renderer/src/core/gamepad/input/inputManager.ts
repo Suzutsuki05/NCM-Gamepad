@@ -7,7 +7,7 @@ const { deadZone } = gamepadConfigMap;
 class GamepadInput {
   private started = false; // 是否已经启动轮询
   private activeGamepadIndex: number | undefined; // 处于活动状态的手柄下标
-  private prevPressed = new Set(); // 上一帧触发的按键
+  private prevPressed = new Set<Action>(); // 上一帧触发的按键
   private subscribers: Subscriber[] = []; // 全部订阅者
 
   // 订阅前置校验
@@ -17,19 +17,22 @@ class GamepadInput {
       console.error("订阅名称不能为空");
       return true;
     }
-    // 校验重复订阅名称
-    if (
-      this.subscribers.findIndex((item) => item.name === subscriber.name) > -1
-    ) {
-      console.error(`订阅名称重复: "${subscriber.name}" 请检查配置项`);
-      return true;
-    }
     return false;
   }
 
   // 订阅手柄输入功能
   subscribe(subscriber: Subscriber) {
     if (this.validate(subscriber)) return;
+
+    const index = this.subscribers.findIndex(
+      (item) => item.name === subscriber.name,
+    );
+
+    if (index > -1) {
+      this.subscribers[index] = subscriber;
+      return;
+    }
+
     this.subscribers.push(subscriber);
   }
 
@@ -42,7 +45,14 @@ class GamepadInput {
 
   // 分发手柄输入值
   private emit(state: InputState) {
-    this.subscribers.forEach((subscriber) => subscriber.callback(state));
+    const subscribers = [...this.subscribers]
+      .reverse()
+      .filter((subscriber) => subscriber.enabled?.() ?? true)
+      .sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+
+    for (const subscriber of subscribers) {
+      if (subscriber.callback(state)) break;
+    }
   }
 
   // 开始轮询
@@ -101,6 +111,7 @@ class GamepadInput {
       }
 
       // TODO 后期可以改成自定义轮询率
+
       // 下一帧继续轮询
       requestAnimationFrame(loop);
     };

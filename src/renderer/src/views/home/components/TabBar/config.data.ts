@@ -1,11 +1,11 @@
 // 焦点前置名称
-export const prefixName = "tab-bar-item-";
+export const prefixName = "tab-bar-";
 
 // tabs列表
 export const tabsList = [
   {
     label: "立即聆听",
-    key: "1",
+    key: "listen-now",
   },
   {
     label: "播客",
@@ -20,7 +20,7 @@ export const tabsList = [
     key: "4",
   },
   {
-    label: "账号",
+    label: "我的",
     key: "5",
   },
   {
