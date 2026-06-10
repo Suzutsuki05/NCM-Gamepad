@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
+import { injectFocusScope } from "@renderer/core/gamepad/focus/scope";
 
 const props = defineProps<{
   focusId: string;
+  scopeId?: string;
 }>();
 
 const elementRef = ref<HTMLElement>();
+const inheritedScopeId = injectFocusScope();
 
 // 是否处于聚焦状态
 const focused = computed(() => {
@@ -15,7 +18,15 @@ const focused = computed(() => {
 
 onMounted(() => {
   if (!elementRef.value) return;
-  focusManager.register(props.focusId, elementRef.value);
+  const resolvedScopeId = props.scopeId ?? inheritedScopeId ?? props.focusId;
+
+  if (!props.scopeId && !inheritedScopeId) {
+    console.warn(
+      `[FocusItem] ${props.focusId} 未声明 scopeId, 将使用 focusId 作为默认 scopeId`,
+    );
+  }
+
+  focusManager.register(props.focusId, elementRef.value, resolvedScopeId);
 });
 
 onUnmounted(() => {

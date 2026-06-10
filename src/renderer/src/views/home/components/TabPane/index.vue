@@ -2,42 +2,41 @@
 import { onUnmounted } from "vue";
 import { useInputCallback } from "@renderer/hooks/gamepad";
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
+import { provideFocusScope } from "@renderer/core/gamepad/focus/scope";
 import ListenNow from "@renderer/views/home/listenNow/index.vue";
-import { prefixName } from "../../components/TabBar/config.data";
+import { focusScopeId as tabBarFocusScopeId } from "../../components/TabBar/config.data";
 
-const { inputCallback, unsubscribe } = useInputCallback("tab-pane", {
-  enabled: () => {
-    const focusId = focusManager.currentFocusId.value;
-    return focusId !== "" && !focusId.startsWith(prefixName);
-  },
-});
+const focusScopeId = "tab-pane";
+
+provideFocusScope(focusScopeId);
+
+const { inputCallback, unsubscribe } = useInputCallback(focusScopeId);
 
 defineProps<{
   selectedTab: string;
 }>();
 
 const left = () => {
-  console.log("tab-pane left");
-  // focusManager.move("left");
+  focusManager.move("left");
 };
 
-// const right = () => {
-//   focusManager.move("right");
-// };
+const right = () => {
+  focusManager.move("right");
+};
 
-// const up = () => {
-//   focusManager.move("up");
-// };
+const up = () => {
+  focusManager.move("up");
+};
 
-// const down = () => {
-//   focusManager.move("down");
-// };
+const down = () => {
+  focusManager.move("down");
+};
 
 inputCallback({
   left,
-  // right,
-  // up,
-  // down,
+  right,
+  up,
+  down,
 });
 
 onUnmounted(() => {
@@ -48,7 +47,7 @@ onUnmounted(() => {
 <template>
   <div class="tab-pane">
     <!-- 立即聆听 -->
-    <div v-show="selectedTab === prefixName + 'listen-now'">
+    <div v-show="selectedTab === `${tabBarFocusScopeId}-listen-now`">
       <ListenNow />
     </div>
   </div>

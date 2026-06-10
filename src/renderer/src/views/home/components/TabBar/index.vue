@@ -2,9 +2,13 @@
 import { onUnmounted } from "vue";
 import { useInputCallback } from "@renderer/hooks/gamepad";
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
-import { prefixName, tabsList } from "./config.data";
+import { provideFocusScope } from "@renderer/core/gamepad/focus/scope";
+import { focusScopeId, tabsList } from "./config.data";
 
-const { inputCallback, unsubscribe } = useInputCallback("tab-bar");
+// 向范围内的FocusItem提供范围id
+provideFocusScope(focusScopeId);
+
+const { inputCallback, unsubscribe } = useInputCallback(focusScopeId);
 
 defineProps<{
   selectedTab: string;
@@ -12,12 +16,14 @@ defineProps<{
 
 const left = () => {
   focusManager.move("left");
-
-  // console.log("tab-bar left");
 };
 
 const right = () => {
   focusManager.move("right");
+};
+
+const up = () => {
+  focusManager.move("up");
 };
 
 const down = () => {
@@ -27,6 +33,7 @@ const down = () => {
 inputCallback({
   left,
   right,
+  up,
   down,
 });
 
@@ -39,10 +46,12 @@ onUnmounted(() => {
   <div class="tab-bar">
     <FocusItem
       class="tab-item"
-      :class="{ 'tab-item-selected': prefixName + item.key === selectedTab }"
+      :class="{
+        'tab-item-selected': `${focusScopeId}-${item.key}` === selectedTab,
+      }"
       v-for="item in tabsList"
       :key="item.key"
-      :focus-id="prefixName + item.key"
+      :focus-id="`${focusScopeId}-${item.key}`"
     >
       <!-- 文本 -->
       <span class="label" v-if="item.label">{{ item.label }}</span>

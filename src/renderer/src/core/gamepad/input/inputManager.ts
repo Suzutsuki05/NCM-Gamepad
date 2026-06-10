@@ -1,4 +1,5 @@
 import { gamepadConfigMap } from "@renderer/constant/gamepad";
+import focusManager from "../focus/focusManager";
 import { mapGamepad } from "./mappings";
 import type { Action, InputState, Subscriber } from "./typing";
 
@@ -45,10 +46,10 @@ class GamepadInput {
 
   // 分发手柄输入值
   private emit(state: InputState) {
-    const subscribers = [...this.subscribers]
-      .reverse()
-      .filter((subscriber) => subscriber.enabled?.() ?? true)
-      .sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+    const currentScopeId = focusManager.getCurrentScopeId();
+    const subscribers = this.subscribers.filter(
+      (subscriber) => subscriber.scopeId === currentScopeId,
+    );
 
     for (const subscriber of subscribers) {
       if (subscriber.callback(state)) break;

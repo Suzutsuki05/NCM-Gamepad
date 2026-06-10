@@ -1,5 +1,5 @@
-// 焦点前置名称
-export const prefixName = "tab-bar-";
+// 聚焦范围名称
+export const focusScopeId = "tab-bar";
 
 // tabs列表
 export const tabsList = [

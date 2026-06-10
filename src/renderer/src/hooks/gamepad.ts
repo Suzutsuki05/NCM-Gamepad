@@ -5,8 +5,8 @@ import type { FocusDirection } from "@renderer/core/gamepad/focus/typing";
 interface Operation extends Partial<Record<Action, () => unknown>> {}
 
 interface UseInputCallbackOptions {
+  name?: string;
   enabled?: () => boolean;
-  priority?: number;
 }
 
 const actionOrder: Action[] = [
@@ -28,16 +28,16 @@ const actionOrder: Action[] = [
 ];
 
 export const useInputCallback = (
-  name: string,
+  scopeId: string,
   options: UseInputCallbackOptions = {},
 ) => {
-  const { enabled, priority = 0 } = options;
+  const { name = scopeId, enabled } = options;
 
   // 手柄输入回调
   const inputCallback = (operation: Operation) => {
     // TODO 适配组合键
     // TODO 适配长按有规律的持续触发
-    // TODO 命名 onLeft
+    // TODO 命名改成 onLeft 的形式
 
     // 回调
     const callback = (state: InputState) => {
@@ -56,9 +56,9 @@ export const useInputCallback = (
     // 自动订阅
     gamepadInput.subscribe({
       name,
+      scopeId,
       callback,
       enabled,
-      priority,
     });
   };
 
@@ -87,7 +87,7 @@ export const useFindNextFocus = () => {
     // 当前元素 Y 坐标
     const currentY = currentRect.top + currentRect.height / 2;
 
-    let bestPriority: number = Infinity;
+    let bestScore: number = Infinity;
     let bestElement: HTMLElement | null = null;
 
     for (const element of elements) {
@@ -121,10 +121,10 @@ export const useFindNextFocus = () => {
           : Math.abs(distanceX);
 
       // 优先级 (越低越优先, 角度偏移权重最高)
-      const priority = distance + anglePenalty * 5;
+      const score = distance + anglePenalty * 5;
 
-      if (priority < bestPriority) {
-        bestPriority = priority;
+      if (score < bestScore) {
+        bestScore = score;
         bestElement = element;
       }
     }

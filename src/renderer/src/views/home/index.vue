@@ -4,7 +4,7 @@ import focusManager from "@renderer/core/gamepad/focus/focusManager";
 import TabBar from "./components/TabBar/index.vue";
 import TabPane from "./components/TabPane/index.vue";
 import {
-  prefixName as tabBarPrefixName,
+  focusScopeId as tabBarFocusScopeId,
   tabsList,
 } from "./components/TabBar/config.data";
 
@@ -16,8 +16,9 @@ watch(
   () => focusManager.currentFocusId.value,
   (focusId) => {
     if (
-      tabsList.findIndex((item) => tabBarPrefixName + item.key === focusId) ===
-      -1
+      tabsList.findIndex(
+        (item) => `${tabBarFocusScopeId}-${item.key}` === focusId,
+      ) === -1
     )
       return;
     selectedTab.value = focusId;
@@ -26,8 +27,8 @@ watch(
 
 // 初始化数据
 const initData = () => {
-  // 聚焦"立即聆听"
-  focusManager.setFocus(tabBarPrefixName + "listen-now");
+  // 默认聚焦"立即聆听"
+  focusManager.setFocus(`${tabBarFocusScopeId}-listen-now`);
 };
 
 onMounted(() => {
