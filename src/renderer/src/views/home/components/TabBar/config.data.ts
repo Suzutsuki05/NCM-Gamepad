@@ -9,23 +9,23 @@ export const tabsList = [
   },
   {
     label: "播客",
-    key: "2",
+    key: "podcast",
   },
   {
     label: "影片",
-    key: "3",
+    key: "movie",
   },
   {
     label: "收藏",
-    key: "4",
+    key: "collection",
   },
   {
     label: "我的",
-    key: "5",
+    key: "mine",
   },
   {
     label: "正在播放",
-    key: "6",
+    key: "playing-now",
   },
   {
     icon: "search",

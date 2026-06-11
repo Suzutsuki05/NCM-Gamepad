@@ -2,7 +2,7 @@ import { inject, provide } from "vue";
 
 const focusScopeKey = Symbol("focus-scope");
 
-// 提供聚焦范围
+// 向范围内的组件提供范围id
 export const provideFocusScope = (scopeId: string) => {
   provide(focusScopeKey, scopeId);
 };

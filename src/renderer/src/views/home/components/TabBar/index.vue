@@ -5,10 +5,8 @@ import focusManager from "@renderer/core/gamepad/focus/focusManager";
 import { provideFocusScope } from "@renderer/core/gamepad/focus/scope";
 import { focusScopeId, tabsList } from "./config.data";
 
-// 向范围内的FocusItem提供范围id
-provideFocusScope(focusScopeId);
-
 const { inputCallback, unsubscribe } = useInputCallback(focusScopeId);
+provideFocusScope(focusScopeId);
 
 defineProps<{
   selectedTab: string;

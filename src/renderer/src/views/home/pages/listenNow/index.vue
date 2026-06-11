@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import ScrollList from "../components/ScrollList/index.vue";
-import Album from "../components/Album/index.vue";
+import ScrollList from "../../components/ScrollList/index.vue";
+import Album from "../../components/Album/index.vue";
 </script>
 
 <template>
