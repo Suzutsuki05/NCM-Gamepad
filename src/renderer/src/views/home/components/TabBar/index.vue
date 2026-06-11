@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onUnmounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { useInputCallback } from "@renderer/hooks/gamepad";
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
 import { provideFocusScope } from "@renderer/core/gamepad/focus/scope";
@@ -8,7 +8,7 @@ import { focusScopeId, tabsList } from "./config.data";
 const { inputCallback, unsubscribe } = useInputCallback(focusScopeId);
 provideFocusScope(focusScopeId);
 
-defineProps<{
+const props = defineProps<{
   selectedTab: string;
 }>();
 
@@ -20,10 +20,6 @@ const right = () => {
   focusManager.move("right");
 };
 
-const up = () => {
-  focusManager.move("up");
-};
-
 const down = () => {
   focusManager.move("down");
 };
@@ -31,11 +27,17 @@ const down = () => {
 inputCallback({
   left,
   right,
-  up,
   down,
 });
 
+onMounted(() => {
+  focusManager.setScopeFocusResolver(focusScopeId, () => {
+    return props.selectedTab;
+  });
+});
+
 onUnmounted(() => {
+  focusManager.removeScopeFocusResolver(focusScopeId);
   unsubscribe();
 });
 </script>

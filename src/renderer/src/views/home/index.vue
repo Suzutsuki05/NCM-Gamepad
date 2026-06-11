@@ -28,7 +28,7 @@ watch(
 // 初始化数据
 const initData = () => {
   // 默认聚焦"立即聆听"
-  focusManager.setFocus(`${tabBarFocusScopeId}-listen-now`);
+  focusManager.setFocus(`${tabBarFocusScopeId}-listen-now`, tabBarFocusScopeId);
 };
 
 onMounted(() => {
