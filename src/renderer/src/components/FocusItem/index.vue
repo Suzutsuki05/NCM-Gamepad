@@ -35,7 +35,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="elementRef" :class="{ focused }">
+  <div ref="elementRef" class="focus-item" :class="{ focused }">
     <slot />
   </div>
 </template>

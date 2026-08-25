@@ -37,7 +37,6 @@ export const useInputCallback = (
   const inputCallback = (operation: Operation) => {
     // TODO 适配组合键
     // TODO 适配长按有规律的持续触发
-    // TODO 命名改成 onLeft 的形式
 
     // 回调
     const callback = (state: InputState) => {
@@ -94,11 +93,11 @@ export const useFindNextFocus = () => {
       if (currentElement === element) continue;
 
       // 目标元素
-      const targetElement = element.getBoundingClientRect();
+      const targetRect = element.getBoundingClientRect();
       // 目标元素 X 坐标
-      const targetX = targetElement.left + targetElement.width / 2;
+      const targetX = targetRect.left + targetRect.width / 2;
       // 目标元素 Y 坐标
-      const targetY = targetElement.top + targetElement.height / 2;
+      const targetY = targetRect.top + targetRect.height / 2;
 
       // 水平方向距离
       const distanceX = targetX - currentX;

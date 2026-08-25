@@ -55,6 +55,11 @@ class FocusManager {
     return this.focusMap.get(this.currentFocusId.value)?.scopeId ?? "";
   }
 
+  // 获取当前聚焦id
+  getCurrentFocusId() {
+    return this.currentFocusId.value;
+  }
+
   // 获取当前聚焦的元素
   getCurrentElement() {
     return this.focusMap.get(this.currentFocusId.value)?.element;

@@ -12,14 +12,17 @@ import PlayingNow from "@renderer/views/home/pages/playingNow/index.vue";
 import Search from "@renderer/views/home/pages/search/index.vue";
 import Setting from "@renderer/views/home/pages/setting/index.vue";
 import { focusScopeId as tabBarFocusScopeId } from "../../components/TabBar/config.data";
-import { focusScopeId } from "./config.data";
+import { focusScopeId as tabPaneFocusScopeId } from "./config.data";
 
-const { inputCallback, unsubscribe } = useInputCallback(focusScopeId);
-provideFocusScope(focusScopeId);
+const { inputCallback, unsubscribe } = useInputCallback(tabPaneFocusScopeId);
+provideFocusScope(tabPaneFocusScopeId);
 
 defineProps<{
   selectedTab: string;
 }>();
+
+// TODO 单独抽出去方向控制
+// TODO 方向控制抽到页面里去
 
 const left = () => {
   focusManager.move("left");
@@ -37,11 +40,16 @@ const down = () => {
   focusManager.move("down");
 };
 
+const confirm = () => {
+  console.log("confirm", focusManager.currentFocusId.value);
+};
+
 inputCallback({
   left,
   right,
   up,
   down,
+  confirm,
 });
 
 onUnmounted(() => {

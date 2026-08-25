@@ -26,11 +26,13 @@ const props = defineProps<{
   align-items: center;
 
   &:first-child {
-    margin-left: 54px;
+    margin-left: 0;
+    padding-left: 54px;
   }
 
   &:last-child {
-    margin-right: 54px;
+    margin-right: 0;
+    padding-right: 54px;
   }
 
   .cover {
@@ -61,6 +63,7 @@ const props = defineProps<{
 }
 
 .focused {
-  border: 1px solid red;
+  // border: 1px solid red;
+  background: lightpink;
 }
 </style>
