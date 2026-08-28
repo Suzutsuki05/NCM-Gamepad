@@ -31,13 +31,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div id="app">
+  <div id="app-content">
     <BasicLayouts />
   </div>
 </template>
 
 <style lang="less" scoped>
-#app {
+#app-content {
   width: 1280px;
   min-height: 100vh;
   transform-origin: top left;

@@ -11,8 +11,7 @@
 
 body {
   min-height: 100vh;
-  background: #292c2b;
-
+  position: relative;
   font-family:
     Inter,
     -apple-system,
@@ -29,6 +28,18 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow-x: auto;
+  overflow-y: auto;
+  background: #292c2b;
+  scrollbar-width: none;
 }
 
 a:visited,

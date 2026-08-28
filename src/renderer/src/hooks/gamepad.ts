@@ -73,6 +73,14 @@ export const useInputCallback = (
 };
 
 export const useFindNextFocus = () => {
+  // 判断两个元素在垂直方向上的投影是否有交集
+  const hasVerticalOverlap = (rectA: DOMRect, rectB: DOMRect) => {
+    const overlap =
+      Math.min(rectA.bottom, rectB.bottom) - Math.max(rectA.top, rectB.top);
+
+    return overlap > Math.min(rectA.height, rectB.height) / 2;
+  };
+
   // 寻找下一个焦点
   const findNextFocus = (
     direction: FocusDirection,
@@ -109,6 +117,14 @@ export const useFindNextFocus = () => {
       if (direction === "left" && distanceX >= 0) continue;
       if (direction === "up" && distanceY >= 0) continue;
       if (direction === "down" && distanceY <= 0) continue;
+
+      // 横向移动只在当前行内查找，避免行末继续跳到下一行元素
+      if (
+        (direction === "left" || direction === "right") &&
+        !hasVerticalOverlap(currentRect, targetRect)
+      ) {
+        continue;
+      }
 
       // 当前元素和目标元素之间的距离 (勾股定理)
       const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);

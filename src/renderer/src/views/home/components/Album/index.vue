@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import focusManager from "@renderer/core/gamepad/focus/focusManager";
 import cover from "@renderer/assets/image/cover.jpg";
 import { prefixName } from "./config.data";
 
@@ -12,18 +13,20 @@ const props = defineProps<{
     <div class="cover">
       <img :src="cover" />
     </div>
-    <!-- TODO 歌曲名称和歌手做动态滚动 -->
-    <div class="song">two</div>
-    <div class="singer">鹿乃</div>
+    <div class="content">
+      <!-- TODO 歌曲名称和歌手做动态滚动 -->
+      <div class="song">two</div>
+      <div class="singer">鹿乃</div>
+    </div>
   </FocusItem>
 </template>
 
 <style lang="less" scoped>
-.album {
+@scale-image: 1.2; // 缩放倍数
+@transition-duration: 0.2s; // 过度时间
+
+.focus-item {
   margin-left: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 
   &:first-child {
     margin-left: 0;
@@ -34,6 +37,12 @@ const props = defineProps<{
     margin-right: 0;
     padding-right: 54px;
   }
+}
+
+.album {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .cover {
     width: 210px;
@@ -41,6 +50,7 @@ const props = defineProps<{
     margin-bottom: 2px;
     border-radius: 10px;
     overflow: hidden;
+    transition: all @transition-duration;
 
     // TODO 添加三边阴影
 
@@ -51,19 +61,34 @@ const props = defineProps<{
     }
   }
 
-  .song {
-    color: #858585;
-    font-size: 20px;
-  }
+  .content {
+    text-align: center;
+    transition: all @transition-duration;
 
-  .singer {
-    color: #696d6f;
-    font-size: 20px;
+    .song {
+      color: #858585;
+      font-size: 20px;
+    }
+
+    .singer {
+      color: #696d6f;
+      font-size: 20px;
+    }
   }
 }
 
 .focused {
-  // border: 1px solid red;
-  background: lightpink;
+  .cover {
+    transform: scale(@scale-image);
+  }
+
+  .content {
+    transform: translateY(21px);
+
+    .song,
+    .singer {
+      color: #fff;
+    }
+  }
 }
 </style>

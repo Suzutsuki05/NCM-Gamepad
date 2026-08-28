@@ -11,6 +11,11 @@ class GamepadInput {
   private prevPressed = new Set<Action>(); // 上一帧触发的按键
   private subscribers: Subscriber[] = []; // 全部订阅者
 
+  // 获取上一帧触发的按键
+  getPrevPressed = () => {
+    return this.prevPressed;
+  };
+
   // 订阅前置校验
   private validate(subscriber: Subscriber) {
     // 去空值

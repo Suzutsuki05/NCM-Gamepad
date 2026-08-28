@@ -50,7 +50,7 @@ class FocusManager {
     return this.currentFocusId.value === id;
   }
 
-  // 获取当前聚焦的scope
+  // 获取当前聚焦的范围
   getCurrentScopeId() {
     return this.focusMap.get(this.currentFocusId.value)?.scopeId ?? "";
   }
@@ -132,6 +132,9 @@ class FocusManager {
     // 跨范围聚焦后设置初始聚焦元素
     const fromScopeId = this.fromScopeId.value;
     const isNewScope = fromScopeId !== targetScopeId;
+
+    // TODO 在这里去额外适配是否使用第一个元素聚焦功能
+
     const nextFocusId = isNewScope
       ? this.getScopeFocusId(targetScopeId, {
           direction,
