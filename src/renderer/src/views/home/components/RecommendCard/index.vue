@@ -10,7 +10,7 @@ const props = defineProps<{
 <template>
   <FocusItem class="recommend-card" :focus-id="prefixName + id">
     <div class="title">新增歌曲</div>
-    <div class="cover">
+    <div class="cover cover-shadow">
       <img :src="cover" />
       <div class="content">
         <!-- TODO 需要支持单独设置换行功能 -->

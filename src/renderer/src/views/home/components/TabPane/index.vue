@@ -37,6 +37,8 @@ const up = () => {
 };
 
 const down = () => {
+  console.log("down");
+
   focusManager.move("down");
 };
 

@@ -10,7 +10,7 @@ const props = defineProps<{
 
 <template>
   <FocusItem class="album" :focus-id="prefixName + id">
-    <div class="cover">
+    <div class="cover cover-shadow">
       <img :src="cover" />
     </div>
     <div class="content">
@@ -51,8 +51,6 @@ const props = defineProps<{
     border-radius: 10px;
     overflow: hidden;
     transition: all @transition-duration;
-
-    // TODO 添加三边阴影
 
     img {
       width: 100%;
