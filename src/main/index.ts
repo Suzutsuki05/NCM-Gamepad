@@ -6,9 +6,7 @@ import icon from "../../resources/icon.png?asset";
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    // TODO 先保持16:9的比例
     width: 1280,
-    height: 720,
     show: false,
     // TODO full screen
     // fullscreen: true,

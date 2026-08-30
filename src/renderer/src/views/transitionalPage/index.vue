@@ -26,14 +26,13 @@ const handleJump = () => {
 };
 
 onMounted(() => {
-  // handleJump();
+  handleJump();
 });
 </script>
 
 <template>
   <div class="transitional-page">
     <div class="title">{{ title }}</div>
-    <div @click="router.push('/home')">123</div>
   </div>
 </template>
 
@@ -44,8 +43,6 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  border: 1px solid red;
 
   .title {
     color: #fff;

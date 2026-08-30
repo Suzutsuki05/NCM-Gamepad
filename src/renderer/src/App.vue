@@ -16,7 +16,10 @@ const init = () => {
 const updateScale = () => {
   const BASE_WIDTH = 1280;
   const scale = window.innerWidth / BASE_WIDTH;
+  const appHeight = window.innerHeight / scale;
+
   document.documentElement.style.setProperty("--scale", scale.toString());
+  document.documentElement.style.setProperty("--app-height", `${appHeight}px`);
 };
 
 onMounted(() => {
@@ -39,8 +42,15 @@ onUnmounted(() => {
 <style lang="less" scoped>
 #app-content {
   width: 1280px;
-  min-height: 100vh;
+  height: var(--app-height, 100vh);
+  overflow-x: hidden;
+  overflow-y: auto;
   transform-origin: top left;
-  transform: scale(var(--scale));
+  transform: scale(var(--scale, 1));
+  scrollbar-width: none;
+}
+
+#app-content::-webkit-scrollbar {
+  display: none;
 }
 </style>
