@@ -6,6 +6,7 @@ interface Operation extends Partial<Record<Action, () => unknown>> {}
 
 interface UseInputCallbackOptions {
   name?: string;
+  global?: boolean;
   enabled?: () => boolean;
 }
 
@@ -31,7 +32,7 @@ export const useInputCallback = (
   scopeId: string,
   options: UseInputCallbackOptions = {},
 ) => {
-  const { name = scopeId, enabled } = options;
+  const { name = scopeId, enabled, global = false } = options;
 
   // 手柄输入回调
   const inputCallback = (operation: Operation) => {
@@ -56,6 +57,7 @@ export const useInputCallback = (
     gamepadInput.subscribe({
       name,
       scopeId,
+      global,
       callback,
       enabled,
     });

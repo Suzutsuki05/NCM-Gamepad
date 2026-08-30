@@ -1,15 +1,32 @@
 <script lang="ts" setup>
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
+import { useJumpTransitionalPage } from "@renderer/hooks/jumpPage";
 import cover from "@renderer/assets/image/cover.jpg";
 import { prefixName } from "./config.data";
+
+const { jumpTransitionalPage } = useJumpTransitionalPage();
 
 const props = defineProps<{
   id: string;
 }>();
+
+// 确认按钮触发
+const handleConfirm = () => {
+  jumpTransitionalPage({
+    id: "114514",
+    title: "わがままハート",
+    fromRouteName: "home",
+    toRouteName: "album-details",
+  });
+};
 </script>
 
 <template>
-  <FocusItem class="album" :focus-id="prefixName + id">
+  <FocusItem
+    class="album"
+    :focus-id="prefixName + id"
+    :on-confirm="handleConfirm"
+  >
     <div class="cover cover-shadow">
       <img :src="cover" />
     </div>

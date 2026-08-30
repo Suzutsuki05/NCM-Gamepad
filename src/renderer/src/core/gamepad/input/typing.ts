@@ -36,12 +36,14 @@ export type ActionMap = Set<Action>;
  * 订阅者
  * @description name 订阅者名称
  * @description scopeId 当前订阅者所属的焦点空间
+ * @description global 是否忽略当前聚焦范围, 用于页面级输入按键（back等）
  * @description callback 订阅的回调方法, 返回 true 表示该事件已经被使用过了
  * @description enabled 当前订阅者是否可处理输入
  */
 export interface Subscriber {
   name: string;
   scopeId: string;
+  global?: boolean;
   callback: (state: InputState) => boolean;
   enabled?: () => boolean;
 }

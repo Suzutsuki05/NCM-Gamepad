@@ -5,6 +5,7 @@ export type FocusDirection = "left" | "right" | "up" | "down";
 export interface FocusTarget {
   element: HTMLElement;
   scopeId: string;
+  onConfirm?: () => void; // 确认按钮
 }
 
 // 进入范围时的聚焦解析参数

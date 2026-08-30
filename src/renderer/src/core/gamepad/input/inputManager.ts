@@ -52,9 +52,19 @@ class GamepadInput {
   // 分发手柄输入值
   private emit(state: InputState) {
     const currentScopeId = focusManager.getCurrentScopeId();
-    const subscribers = this.subscribers.filter(
-      (subscriber) => subscriber.scopeId === currentScopeId,
-    );
+    // 已启用的订阅者
+    const enabledSubscribers = this.subscribers.filter((subscriber) => {
+      return subscriber.enabled?.() ?? true;
+    });
+    // 范围内的订阅者（非全局）
+    const scopedSubscribers = enabledSubscribers.filter((subscriber) => {
+      return !subscriber.global && subscriber.scopeId === currentScopeId;
+    });
+    // 全局功能订阅者
+    const globalSubscribers = enabledSubscribers.filter((subscriber) => {
+      return subscriber.global;
+    });
+    const subscribers = [...scopedSubscribers, ...globalSubscribers];
 
     for (const subscriber of subscribers) {
       if (subscriber.callback(state)) break;

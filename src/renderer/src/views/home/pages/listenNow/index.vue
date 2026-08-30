@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { watch, nextTick } from "vue";
-import { useVerticalScroll } from "../../hooks/scroll.js";
+import { useVerticalScroll } from "@renderer/hooks/scroll.js";
 import focusManager from "@renderer/core/gamepad/focus/focusManager.js";
 import HorizontalScrollList from "../../components/HorizontalScrollList/index.vue";
 import RecommendCard from "../../components/RecommendCard/index.vue";
@@ -23,7 +23,7 @@ watch(
     <!-- 精选推荐 -->
     <HorizontalScrollList
       :titleBeforeMoveUpValue="18"
-      :titleMoveUpValue="5"
+      :titleMoveUpValue="10"
       :safeScaleTop="28"
       :safeScaleBottom="30"
     >
@@ -72,7 +72,7 @@ watch(
     <!-- 音乐回忆：你的历年热门歌曲 -->
     <HorizontalScrollList
       :titleBeforeMoveUpValue="18"
-      :titleMoveUpValue="5"
+      :titleMoveUpValue="10"
       :safeScaleTop="28"
       :safeScaleBottom="30"
     >

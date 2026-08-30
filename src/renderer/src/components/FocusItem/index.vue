@@ -6,6 +6,7 @@ import { injectFocusScope } from "@renderer/core/gamepad/focus/scope";
 const props = defineProps<{
   focusId: string;
   scopeId?: string;
+  onConfirm?: () => void; // 确认按钮触发
 }>();
 
 const elementRef = ref<HTMLElement>();
@@ -26,7 +27,12 @@ onMounted(() => {
     );
   }
 
-  focusManager.register(props.focusId, elementRef.value, resolvedScopeId);
+  focusManager.register(
+    props.focusId,
+    elementRef.value,
+    resolvedScopeId,
+    props.onConfirm,
+  );
 });
 
 onUnmounted(() => {

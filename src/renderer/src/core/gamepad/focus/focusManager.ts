@@ -16,10 +16,16 @@ class FocusManager {
   scopeResolvers = new Map<string, ScopeFocusResolver>(); // 范围焦点解析器
 
   // 注册为可聚焦元素
-  register(id: string, element: HTMLElement, scopeId: string) {
+  register(
+    id: string,
+    element: HTMLElement,
+    scopeId: string,
+    onConfirm?: () => void,
+  ) {
     this.focusMap.set(id, {
       element,
       scopeId,
+      onConfirm,
     });
   }
 
@@ -145,6 +151,12 @@ class FocusManager {
       : targetId;
 
     this.setFocus(isNewScope ? nextFocusId : targetId, targetScopeId);
+  }
+
+  // 确认按钮
+  confirmCurrent() {
+    const target = this.focusMap.get(this.currentFocusId.value);
+    target?.onConfirm?.();
   }
 }
 

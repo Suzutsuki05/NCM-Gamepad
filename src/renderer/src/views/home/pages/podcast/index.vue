@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { watch, nextTick } from "vue";
-import { useVerticalScroll } from "../../hooks/scroll.js";
+import { useVerticalScroll } from "@renderer/hooks/scroll.js";
 import focusManager from "@renderer/core/gamepad/focus/focusManager.js";
 import HorizontalScrollList from "../../components/HorizontalScrollList/index.vue";
 import LargeCard from "../../components/LargeCard/index.vue";

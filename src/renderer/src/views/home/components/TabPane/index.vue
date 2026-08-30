@@ -3,6 +3,7 @@ import { onUnmounted } from "vue";
 import { useInputCallback } from "@renderer/hooks/gamepad";
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
 import { provideFocusScope } from "@renderer/core/gamepad/focus/scope";
+
 import ListenNow from "@renderer/views/home/pages/listenNow/index.vue";
 import Podcast from "@renderer/views/home/pages/podcast/index.vue";
 import Movie from "@renderer/views/home/pages/movie/index.vue";
@@ -14,15 +15,11 @@ import Setting from "@renderer/views/home/pages/setting/index.vue";
 import { focusScopeId as tabBarFocusScopeId } from "../../components/TabBar/config.data";
 import { focusScopeId as tabPaneFocusScopeId } from "./config.data";
 
-const { inputCallback, unsubscribe } = useInputCallback(tabPaneFocusScopeId);
-provideFocusScope(tabPaneFocusScopeId);
-
 defineProps<{
   selectedTab: string;
 }>();
 
-// TODO 单独抽出去方向控制
-// TODO 方向控制抽到页面里去
+const { inputCallback, unsubscribe } = useInputCallback(tabPaneFocusScopeId);
 
 const left = () => {
   focusManager.move("left");
@@ -37,13 +34,12 @@ const up = () => {
 };
 
 const down = () => {
-  console.log("down");
-
   focusManager.move("down");
 };
 
+// TODO 这里会不会多余，直接写死算了
 const confirm = () => {
-  console.log("confirm", focusManager.currentFocusId.value);
+  focusManager.confirmCurrent();
 };
 
 inputCallback({
@@ -57,6 +53,8 @@ inputCallback({
 onUnmounted(() => {
   unsubscribe();
 });
+
+provideFocusScope(tabPaneFocusScopeId); // 提供聚焦范围
 </script>
 
 <template>
