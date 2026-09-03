@@ -60,35 +60,50 @@ provideFocusScope(tabPaneFocusScopeId); // 提供聚焦范围
 <template>
   <div class="tab-pane">
     <!-- 立即聆听 -->
-    <div v-show="selectedTab === `${tabBarFocusScopeId}-listen-now`">
+    <div
+      class="module"
+      v-show="selectedTab === `${tabBarFocusScopeId}-listen-now`"
+    >
       <ListenNow />
     </div>
     <!-- 播客 -->
-    <div v-show="selectedTab === `${tabBarFocusScopeId}-podcast`">
+    <div
+      class="module"
+      v-show="selectedTab === `${tabBarFocusScopeId}-podcast`"
+    >
       <Podcast />
     </div>
     <!-- 影片 -->
-    <div v-show="selectedTab === `${tabBarFocusScopeId}-movie`">
+    <div class="module" v-show="selectedTab === `${tabBarFocusScopeId}-movie`">
       <Movie />
     </div>
     <!-- 收藏 -->
-    <div v-show="selectedTab === `${tabBarFocusScopeId}-collection`">
+    <div
+      class="module"
+      v-show="selectedTab === `${tabBarFocusScopeId}-collection`"
+    >
       <Collection />
     </div>
     <!-- 我的 -->
-    <div v-show="selectedTab === `${tabBarFocusScopeId}-mine`">
+    <div class="module" v-show="selectedTab === `${tabBarFocusScopeId}-mine`">
       <Mine />
     </div>
     <!-- 正在播放 -->
-    <div v-show="selectedTab === `${tabBarFocusScopeId}-playing-now`">
+    <div
+      class="module"
+      v-show="selectedTab === `${tabBarFocusScopeId}-playing-now`"
+    >
       <PlayingNow />
     </div>
     <!-- 搜索 -->
-    <div v-show="selectedTab === `${tabBarFocusScopeId}-search`">
+    <div class="module" v-show="selectedTab === `${tabBarFocusScopeId}-search`">
       <Search />
     </div>
     <!-- 设置 -->
-    <div v-show="selectedTab === `${tabBarFocusScopeId}-setting`">
+    <div
+      class="module"
+      v-show="selectedTab === `${tabBarFocusScopeId}-setting`"
+    >
       <Setting />
     </div>
   </div>
@@ -96,5 +111,10 @@ provideFocusScope(tabPaneFocusScopeId); // 提供聚焦范围
 
 <style lang="less" scoped>
 .tab-pane {
+  height: 100%;
+
+  .module {
+    height: 100%;
+  }
 }
 </style>

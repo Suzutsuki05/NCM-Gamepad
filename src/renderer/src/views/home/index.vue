@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, provide } from "vue";
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
 import TabBar from "./components/TabBar/index.vue";
 import TabPane from "./components/TabPane/index.vue";
@@ -12,8 +12,8 @@ defineOptions({
   name: "Home",
 });
 
-// 当前选中tab
-const selectedTab = ref<string>("");
+const selectedTab = ref<string>(""); // 当前选中tab
+const isShowTab = ref<boolean>(true); // 是否显示tab
 
 // 设置选中tab
 watch(
@@ -29,32 +29,40 @@ watch(
   },
 );
 
+// 设置tab bar显示状态
+const setTabBarVisible = (visible: boolean) => {
+  isShowTab.value = visible;
+};
+
 // 初始化数据
 const initData = () => {
   // 默认聚焦"立即聆听"
-  focusManager.setFocus(`${tabBarFocusScopeId}-listen-now`, tabBarFocusScopeId);
+  // focusManager.setFocus(`${tabBarFocusScopeId}-listen-now`, tabBarFocusScopeId);
 
   // TODO del 开发用暂时选中
-  // focusManager.setFocus(
-  //   `${tabBarFocusScopeId}-playing-now`,
-  //   tabBarFocusScopeId,
-  // );
+  focusManager.setFocus(
+    `${tabBarFocusScopeId}-playing-now`,
+    tabBarFocusScopeId,
+  );
 };
 
 onMounted(() => {
   initData();
 });
+
+provide("home-context", { setTabBarVisible });
 </script>
 
 <template>
   <div class="home">
-    <TabBar :selectedTab="selectedTab" />
+    <TabBar :selectedTab="selectedTab" v-show="isShowTab" />
     <TabPane :selectedTab="selectedTab" />
   </div>
 </template>
 
 <style lang="less" scoped>
 .home {
+  height: 100%;
   position: relative;
 }
 </style>

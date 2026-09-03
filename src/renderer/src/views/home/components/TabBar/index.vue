@@ -68,14 +68,13 @@ onUnmounted(() => {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 5px;
-  background: #0c0f0e;
-  border-radius: 50px;
-
   position: absolute;
   top: 32px;
   left: 25%;
   z-index: 999;
+  padding: 5px;
+  background: #0c0f0e;
+  border-radius: 50px;
 
   .tab-item {
     height: 38px;
