@@ -5,24 +5,33 @@ import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 
+const stayTime = 1.5; // 停留时间(单位:秒)
+
 // 标题
 const title = computed(() => {
   return route.query.title;
 });
 
-// 前往页面名称
-const toRouteName = computed(() => {
-  return route.query.toRouteName?.toString();
+// 来源页面路径
+const fromRoutePath = computed(() => {
+  return route.query.fromRoutePath?.toString();
+});
+
+// 前往页面路径
+const toRoutePath = computed(() => {
+  return route.query.toRoutePath?.toString();
 });
 
 // 页面跳转
 const handleJump = () => {
   setTimeout(() => {
-    router.push({
-      name: toRouteName.value,
-      query: {},
+    router.replace({
+      path: toRoutePath.value,
+      query: {
+        test: "123",
+      },
     });
-  }, 1500);
+  }, stayTime * 1000);
 };
 
 onMounted(() => {
@@ -46,6 +55,7 @@ onMounted(() => {
 
   .title {
     color: #fff;
+    // TODO 文字大小待定
     font-size: 32px;
     font-weight: bold;
   }

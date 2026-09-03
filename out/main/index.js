@@ -5,7 +5,6 @@ const utils = require("@electron-toolkit/utils");
 const icon = path.join(__dirname, "../../resources/icon.png");
 function createWindow() {
   const mainWindow = new electron.BrowserWindow({
-    // TODO 先保持16:9的比例
     width: 1280,
     height: 720,
     show: false,

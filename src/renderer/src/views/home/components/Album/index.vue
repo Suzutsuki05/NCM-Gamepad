@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
 import { useJumpTransitionalPage } from "@renderer/hooks/jumpPage";
-import cover from "@renderer/assets/image/cover.jpg";
 import { prefixName } from "./config.data";
+import cover from "@renderer/assets/image/cover.jpg";
 
 const { jumpTransitionalPage } = useJumpTransitionalPage();
 
@@ -14,9 +14,9 @@ const props = defineProps<{
 const handleConfirm = () => {
   jumpTransitionalPage({
     id: "114514",
-    title: "わがままハート",
-    fromRouteName: "home",
-    toRouteName: "album-details",
+    title: "two",
+    fromRoutePath: "/home",
+    toRoutePath: "/album-details",
   });
 };
 </script>
@@ -81,7 +81,7 @@ const handleConfirm = () => {
     transition: all @transition-duration;
 
     .song {
-      color: #858585;
+      color: #888387;
       font-size: 20px;
     }
 

@@ -15,8 +15,14 @@ export default [
   },
   // 专辑详情
   {
-    path: "/albumDetails",
+    path: "/album-details",
     name: "album-details",
     component: () => import("@renderer/views/albumDetails/index.vue"),
+  },
+  // 音乐播放页
+  {
+    path: "/music-playback",
+    name: "music-playback",
+    component: () => import("@renderer/views/musicPlayback/index.vue"),
   },
 ] as RouteRecordRaw[];

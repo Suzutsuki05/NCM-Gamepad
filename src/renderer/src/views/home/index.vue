@@ -8,6 +8,10 @@ import {
   tabsList,
 } from "./components/TabBar/config.data";
 
+defineOptions({
+  name: "Home",
+});
+
 // 当前选中tab
 const selectedTab = ref<string>("");
 
