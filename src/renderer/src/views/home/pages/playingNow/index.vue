@@ -13,5 +13,7 @@
   justify-content: center;
   align-items: center;
   color: #fff;
+
+  border: 1px solid red;
 }
 </style>

@@ -72,6 +72,11 @@ onUnmounted(() => {
   background: #0c0f0e;
   border-radius: 50px;
 
+  position: absolute;
+  top: 32px;
+  left: 25%;
+  z-index: 999;
+
   .tab-item {
     height: 38px;
     padding: 0 22px;

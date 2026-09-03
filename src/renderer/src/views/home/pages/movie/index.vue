@@ -13,5 +13,6 @@
   justify-content: center;
   align-items: center;
   color: #fff;
+  padding-top: var(--home-top-safe-area);
 }
 </style>

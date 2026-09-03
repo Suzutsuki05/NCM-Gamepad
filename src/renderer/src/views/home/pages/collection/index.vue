@@ -12,6 +12,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: var(--home-top-safe-area);
   color: #fff;
 }
 </style>

@@ -84,6 +84,7 @@ watch(
 
 <style lang="less" scoped>
 .podcast {
+  padding-top: var(--home-top-safe-area);
   padding-bottom: 95px;
 }
 </style>

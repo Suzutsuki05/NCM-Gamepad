@@ -33,6 +33,12 @@ watch(
 const initData = () => {
   // 默认聚焦"立即聆听"
   focusManager.setFocus(`${tabBarFocusScopeId}-listen-now`, tabBarFocusScopeId);
+
+  // TODO del 开发用暂时选中
+  // focusManager.setFocus(
+  //   `${tabBarFocusScopeId}-playing-now`,
+  //   tabBarFocusScopeId,
+  // );
 };
 
 onMounted(() => {
@@ -42,23 +48,13 @@ onMounted(() => {
 
 <template>
   <div class="home">
-    <div class="header">
-      <TabBar :selectedTab="selectedTab" />
-    </div>
-    <div class="content">
-      <TabPane :selectedTab="selectedTab" />
-    </div>
+    <TabBar :selectedTab="selectedTab" />
+    <TabPane :selectedTab="selectedTab" />
   </div>
 </template>
 
 <style lang="less" scoped>
 .home {
-  .header {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 32px;
-  }
+  position: relative;
 }
 </style>

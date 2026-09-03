@@ -90,6 +90,7 @@ watch(
 
 <style lang="less" scoped>
 .listen-now {
+  padding-top: var(--home-top-safe-area);
   padding-bottom: 95px;
 }
 </style>
