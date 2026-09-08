@@ -7,11 +7,13 @@ import {
   focusScopeId as tabBarFocusScopeId,
   tabsList,
 } from "./components/TabBar/config.data";
+import { HomeContext } from "./pages/typing.js";
 
 defineOptions({
   name: "Home",
 });
 
+const homeRef = ref<HTMLElement | null>(null);
 const selectedTab = ref<string>(""); // 当前选中tab
 const isShowTab = ref<boolean>(true); // 是否显示tab
 
@@ -29,32 +31,49 @@ watch(
   },
 );
 
-// 设置tab bar显示状态
+// 设置背景颜色 (不传参重置默认背景色)
+const setBackgroundColor = (color: string = "var(--background-color)") => {
+  const target = homeRef.value;
+  if (!target) return;
+  target.style.backgroundColor = color;
+};
+
+// 设置tab-bar显示状态
 const setTabBarVisible = (visible: boolean) => {
   isShowTab.value = visible;
+};
+
+// 设置tab-bar选中值
+const setTabBarSelectedValue = (focusScopeId: string) => {
+  focusManager.setFocus(
+    `${tabBarFocusScopeId}-${focusScopeId}`,
+    tabBarFocusScopeId,
+  );
 };
 
 // 初始化数据
 const initData = () => {
   // 默认聚焦"立即聆听"
-  // focusManager.setFocus(`${tabBarFocusScopeId}-listen-now`, tabBarFocusScopeId);
+  // setTabBarSelectedValue("listen-now");
 
   // TODO del 开发用暂时选中
-  focusManager.setFocus(
-    `${tabBarFocusScopeId}-playing-now`,
-    tabBarFocusScopeId,
-  );
+  setTabBarSelectedValue("playing-now");
 };
 
 onMounted(() => {
   initData();
 });
 
-provide("home-context", { setTabBarVisible });
+// 提供上下文
+provide("home-context", {
+  setBackgroundColor,
+  setTabBarVisible,
+  setTabBarSelectedValue,
+} as HomeContext);
 </script>
 
 <template>
-  <div class="home">
+  <div class="home" ref="homeRef">
     <TabBar :selectedTab="selectedTab" v-show="isShowTab" />
     <TabPane :selectedTab="selectedTab" />
   </div>
@@ -62,7 +81,9 @@ provide("home-context", { setTabBarVisible });
 
 <style lang="less" scoped>
 .home {
-  height: 100%;
+  min-height: var(--app-height, 100vh);
   position: relative;
+  background: var(--background-color);
+  transition: background 1.5s;
 }
 </style>

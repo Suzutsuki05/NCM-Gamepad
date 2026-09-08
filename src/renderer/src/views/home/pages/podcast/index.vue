@@ -1,13 +1,20 @@
 <script lang="ts" setup>
-import { watch, nextTick } from "vue";
+import { watch, nextTick, onUnmounted } from "vue";
 import { useVerticalScroll } from "@renderer/hooks/scroll.js";
+import { useInputCallback } from "@renderer/hooks/gamepad";
+import { useDefaultInputHandlers } from "@renderer/hooks/focus";
+import { provideFocusScope } from "@renderer/core/gamepad/focus/scope";
 import focusManager from "@renderer/core/gamepad/focus/focusManager.js";
+
 import HorizontalScrollList from "../../components/HorizontalScrollList/index.vue";
 import LargeCard from "../../components/LargeCard/index.vue";
 import RecommendCard from "../../components/RecommendCard/index.vue";
 import Album from "../../components/Album/index.vue";
+import { focusScopeId } from "./config.data";
 
+const { inputCallback, unsubscribe } = useInputCallback(focusScopeId);
 const { verticalScroll } = useVerticalScroll();
+const defaultInputHandlers = useDefaultInputHandlers();
 
 // 垂直滚动
 watch(
@@ -17,6 +24,17 @@ watch(
     verticalScroll();
   },
 );
+
+inputCallback({
+  ...defaultInputHandlers,
+});
+
+onUnmounted(() => {
+  unsubscribe();
+});
+
+// 提供聚焦范围
+provideFocusScope(focusScopeId);
 </script>
 
 <template>

@@ -87,6 +87,7 @@ onUnmounted(() => {
   height: 100%;
   display: flex;
   flex-direction: row;
+  background: var(--background-color);
 
   .cover-wrap {
     width: 42%;

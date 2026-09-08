@@ -52,6 +52,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: var(--background-color);
 
   .title {
     color: #fff;
