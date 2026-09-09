@@ -98,10 +98,12 @@ class FocusManager {
     const resolver = this.scopeResolvers.get(scopeId);
     const resolvedFocusId = resolver?.(context);
 
+    // 如果有设置自定义聚焦元素，使用自定义的
     if (resolvedFocusId && this.focusMap.has(resolvedFocusId)) {
       return resolvedFocusId;
     }
 
+    // 没有就用第一个元素 或 上下文的失败聚焦元素
     return this.getScopeFirstId(scopeId) || context.fallbackFocusId;
   }
 
@@ -138,8 +140,6 @@ class FocusManager {
     // 跨范围聚焦后设置初始聚焦元素
     const fromScopeId = this.fromScopeId.value;
     const isNewScope = fromScopeId !== targetScopeId;
-
-    // TODO 在这里去额外适配是否使用第一个元素聚焦功能
 
     const nextFocusId = isNewScope
       ? this.getScopeFocusId(targetScopeId, {

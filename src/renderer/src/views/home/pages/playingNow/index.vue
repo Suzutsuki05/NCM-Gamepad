@@ -1,44 +1,74 @@
 <script lang="ts" setup>
-import { ref, computed, watch, inject, nextTick, onUnmounted } from "vue";
+import { ref, watch, inject, nextTick, onMounted, onUnmounted } from "vue";
 import { useInputCallback } from "@renderer/hooks/gamepad";
 import { useDefaultInputHandlers } from "@renderer/hooks/focus";
+import { useHorizontalScroll } from "@renderer/hooks/scroll";
 import { provideFocusScope } from "@renderer/core/gamepad/focus/scope";
 import focusManager from "@renderer/core/gamepad/focus/focusManager";
 
 import type { HomeContext } from "../typing";
 
 import ProgressBar from "./components/ProgressBar.vue";
-import { focusScopeId, songItemPrefixName } from "./config.data";
+import {
+  focusScopeId,
+  buttonPrefixName,
+  songItemPrefixName,
+} from "./config.data";
 import cover from "@renderer/assets/image/cover3.jpg";
 
+const { inputCallback, unsubscribe } = useInputCallback(focusScopeId);
+const { horizontalScroll } = useHorizontalScroll();
+const defaultInputHandlers = useDefaultInputHandlers();
 const { setTabBarVisible, setTabBarSelectedValue } = inject(
   "home-context",
 ) as HomeContext;
-const { inputCallback, unsubscribe } = useInputCallback(focusScopeId);
-const defaultInputHandlers = useDefaultInputHandlers();
 
+const songListRef = ref<HTMLElement | null>(null); // 歌曲列表Ref
 const isShowNonPrimaryContent = ref<boolean>(false); // 是否展示非主要内容
 const isShowSubButton = ref<boolean>(false); // 是否展示子按钮
+const lastFocusedSongId = ref<string>(""); // 上一次聚焦的歌曲项
 
-// 是否聚焦于歌曲列表中
-const isFocusSongList = computed(() => {
-  const focusId = focusManager.currentFocusId.value;
-  return focusId.includes(songItemPrefixName);
-});
+// 聚焦于歌曲列表后的设置
+const afterFocusSongList = () => {
+  setTabBarVisible(false);
+  isShowNonPrimaryContent.value = true;
+};
+
+// 歌曲项是否被聚焦
+const isSongItemFocus = (focusId: string) => {
+  return focusId.startsWith(songItemPrefixName);
+};
+
+// 按钮组是否被聚焦
+const isButtonFocus = (focusId: string) => {
+  return focusId.startsWith(buttonPrefixName);
+};
 
 watch(
   () => focusManager.currentFocusId.value,
-  async () => {
-    await nextTick();
-
-    // 在歌曲列表范围内
-    if (isFocusSongList.value) {
-      setTabBarVisible(false);
-      isShowNonPrimaryContent.value = true;
+  async (focusId) => {
+    if (isSongItemFocus(focusId)) {
+      lastFocusedSongId.value = focusId;
+      afterFocusSongList();
     }
+
+    await nextTick();
+    horizontalScroll(songListRef);
   },
 );
 
+// 按键"下"
+const down = () => {
+  const currentFocusId = focusManager.getCurrentFocusId();
+  // 从顶部按钮栏 -> 歌曲列表
+  if (isButtonFocus(currentFocusId) && lastFocusedSongId.value) {
+    focusManager.setFocus(lastFocusedSongId.value, focusScopeId);
+    return;
+  }
+  focusManager.move("down");
+};
+
+// 按键"返回"
 const back = () => {
   setTabBarVisible(true);
   isShowNonPrimaryContent.value = false;
@@ -47,10 +77,19 @@ const back = () => {
 
 inputCallback({
   ...defaultInputHandlers,
+  down,
   back,
 });
 
+onMounted(() => {
+  // 设置离开范围后返回时聚焦的元素
+  focusManager.setScopeFocusResolver(focusScopeId, () => {
+    return lastFocusedSongId.value;
+  });
+});
+
 onUnmounted(() => {
+  focusManager.removeScopeFocusResolver(focusScopeId);
   unsubscribe();
 });
 
@@ -60,14 +99,19 @@ provideFocusScope(focusScopeId);
 
 <template>
   <div class="playing-now">
-    <div class="tool-bar" :class="{ 'tool-bar-show': isShowNonPrimaryContent }">
+    <div class="tool-bar" v-if="isShowNonPrimaryContent">
       <span></span>
       <div class="album-name">星座になれたら - Single</div>
       <div class="button-list">
-        <div class="button" v-for="index in 4" :key="index"></div>
+        <FocusItem
+          class="button"
+          v-for="index in 4"
+          :key="index"
+          :focus-id="buttonPrefixName + index"
+        ></FocusItem>
       </div>
     </div>
-    <div class="song-list">
+    <div ref="songListRef" class="song-list">
       <FocusItem
         class="song-item"
         v-for="index in 6"
@@ -110,11 +154,6 @@ provideFocusScope(focusScopeId);
     position: absolute;
     top: 42px;
     left: 0;
-    opacity: 0;
-
-    &-show {
-      opacity: 1;
-    }
 
     .album-name {
       position: absolute;
@@ -142,6 +181,10 @@ provideFocusScope(focusScopeId);
         &:first-child {
           margin-left: 0;
         }
+      }
+
+      .focused {
+        background: red;
       }
     }
   }

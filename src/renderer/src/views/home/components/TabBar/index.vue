@@ -6,7 +6,6 @@ import { provideFocusScope } from "@renderer/core/gamepad/focus/scope";
 import { focusScopeId, tabsList } from "./config.data";
 
 const { inputCallback, unsubscribe } = useInputCallback(focusScopeId);
-provideFocusScope(focusScopeId);
 
 const props = defineProps<{
   selectedTab: string;
@@ -40,6 +39,9 @@ onUnmounted(() => {
   focusManager.removeScopeFocusResolver(focusScopeId);
   unsubscribe();
 });
+
+// 提供聚焦范围
+provideFocusScope(focusScopeId);
 </script>
 
 <template>
