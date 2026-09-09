@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { inject } from "vue";
+import type { HomeContext } from "@renderer/views/home/typing";
 import ListenNow from "@renderer/views/home/pages/listenNow/index.vue";
 import Podcast from "@renderer/views/home/pages/podcast/index.vue";
 import Movie from "@renderer/views/home/pages/movie/index.vue";
@@ -9,9 +11,7 @@ import Search from "@renderer/views/home/pages/search/index.vue";
 import Setting from "@renderer/views/home/pages/setting/index.vue";
 import { focusScopeId as tabBarFocusScopeId } from "../../components/TabBar/config.data";
 
-defineProps<{
-  selectedTab: string;
-}>();
+const { selectedTab } = inject("home-context") as HomeContext;
 </script>
 
 <template>

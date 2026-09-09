@@ -75,7 +75,7 @@ provideFocusScope(focusScopeId);
   left: 25%;
   z-index: 999;
   padding: 5px;
-  background: #0c0f0e;
+  background: rgba(12, 15, 14, 0.8);
   border-radius: 50px;
 
   .tab-item {
@@ -88,6 +88,20 @@ provideFocusScope(focusScopeId);
     border-radius: 50px;
     cursor: pointer;
     user-select: none;
+
+    &.focused {
+      .label {
+        color: #040606;
+      }
+
+      .icon {
+        fill: #040606 !important;
+      }
+
+      .tab-item-mask {
+        opacity: 1;
+      }
+    }
 
     .label {
       color: #878787;
@@ -129,20 +143,6 @@ provideFocusScope(focusScopeId);
         0 10px 30px rgba(0, 0, 0, 0.35),
         0 4px 10px rgba(0, 0, 0, 0.2);
       opacity: 0;
-    }
-  }
-
-  .focused {
-    .label {
-      color: #040606;
-    }
-
-    .icon {
-      fill: #040606 !important;
-    }
-
-    .tab-item-mask {
-      opacity: 1;
     }
   }
 }

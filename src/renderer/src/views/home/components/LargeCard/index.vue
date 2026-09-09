@@ -34,6 +34,10 @@ const props = defineProps<{
 }
 
 .large-card {
+  &.focused {
+    background: lightpink;
+  }
+
   .card {
     width: 570px;
     height: 300px;
@@ -48,7 +52,5 @@ const props = defineProps<{
   }
 }
 
-.focused {
-  background: lightpink;
-}
+// large-card
 </style>

@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import focusManager from "@renderer/core/gamepad/focus/focusManager";
 import { useJumpTransitionalPage } from "@renderer/hooks/jumpPage";
 import { prefixName } from "./config.data";
 import cover from "@renderer/assets/image/cover.jpg";
 
 const { jumpTransitionalPage } = useJumpTransitionalPage();
 
-const props = defineProps<{
+defineProps<{
   id: string;
 }>();
 
@@ -39,8 +38,7 @@ const handleConfirm = () => {
 </template>
 
 <style lang="less" scoped>
-@scale-image: 1.2; // 缩放倍数
-@transition-duration: 0.2s; // 过度时间
+@scale-image: 1.2; // 图片缩放倍数
 
 .focus-item {
   margin-left: 30px;
@@ -61,13 +59,28 @@ const handleConfirm = () => {
   flex-direction: column;
   align-items: center;
 
+  &.focused {
+    .cover {
+      transform: scale(@scale-image);
+    }
+
+    .content {
+      transform: translateY(21px);
+
+      .song,
+      .singer {
+        color: #fff;
+      }
+    }
+  }
+
   .cover {
     width: 210px;
     height: 210px;
     margin-bottom: 2px;
     border-radius: 10px;
     overflow: hidden;
-    transition: all @transition-duration;
+    transition: all var(--transition-duration);
 
     img {
       width: 100%;
@@ -78,7 +91,7 @@ const handleConfirm = () => {
 
   .content {
     text-align: center;
-    transition: all @transition-duration;
+    transition: all var(--transition-duration);
 
     .song {
       color: #888387;
@@ -88,21 +101,6 @@ const handleConfirm = () => {
     .singer {
       color: #696d6f;
       font-size: 20px;
-    }
-  }
-}
-
-.focused {
-  .cover {
-    transform: scale(@scale-image);
-  }
-
-  .content {
-    transform: translateY(21px);
-
-    .song,
-    .singer {
-      color: #fff;
     }
   }
 }

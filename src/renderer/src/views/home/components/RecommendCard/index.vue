@@ -25,7 +25,6 @@ const props = defineProps<{
 
 <style lang="less" scoped>
 @scale-image: 1.15; // 图片缩放倍数
-@transition-duration: 0.2s; // 过度时间
 
 .focus-item {
   margin-left: 30px;
@@ -42,12 +41,22 @@ const props = defineProps<{
 }
 
 .recommend-card {
+  &.focused {
+    .title {
+      transform: translateY(-28px);
+    }
+
+    .cover {
+      transform: scale(@scale-image);
+    }
+  }
+
   .title {
     margin-bottom: 9px;
     color: #858585;
     font-size: 20px;
     line-height: 100%;
-    transition: all @transition-duration;
+    transition: all var(--transition-duration);
   }
 
   .cover {
@@ -56,7 +65,7 @@ const props = defineProps<{
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    transition: all @transition-duration;
+    transition: all var(--transition-duration);
 
     img {
       width: 100%;
@@ -87,16 +96,6 @@ const props = defineProps<{
         line-height: 22px;
       }
     }
-  }
-}
-
-.focused {
-  .title {
-    transform: translateY(-28px);
-  }
-
-  .cover {
-    transform: scale(@scale-image);
   }
 }
 </style>

@@ -116,14 +116,12 @@ watch(
 </template>
 
 <style lang="less" scoped>
-@transition-duration: 0.2s; // 过度时间
-
 .title-wrap {
   display: flex;
   justify-content: flex-start;
 
   .title {
-    transition: all @transition-duration;
+    transition: all var(--transition-duration);
   }
 }
 

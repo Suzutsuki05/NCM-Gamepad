@@ -23,7 +23,7 @@
 
   .bar {
     width: 100%;
-    height: 8px;
+    height: 9px;
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(20px);
     border-radius: 5px;
@@ -32,13 +32,13 @@
   .time-value {
     color: #ffffff99;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 800;
     line-height: 100%;
   }
 
   .time-remaining {
-    margin-top: 10px;
-    margin-right: 1px;
+    margin-top: 8px;
+    margin-right: 2px;
   }
 
   .time-current {
@@ -47,13 +47,13 @@
     top: 0;
 
     .line {
-      width: 1.5px;
-      height: 8px;
+      width: 1.3px;
+      height: 9px;
       background: #fff;
     }
 
     .value {
-      margin-top: 10px;
+      margin-top: 8px;
       transform: translateX(-50%);
     }
   }
