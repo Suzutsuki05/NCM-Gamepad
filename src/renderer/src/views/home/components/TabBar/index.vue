@@ -76,6 +76,7 @@ provideFocusScope(focusScopeId);
   z-index: 999;
   padding: 5px;
   background: rgba(12, 15, 14, 0.8);
+  backdrop-filter: blur(20px);
   border-radius: 50px;
 
   .tab-item {

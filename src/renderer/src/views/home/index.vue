@@ -13,7 +13,7 @@ defineOptions({
   name: "Home",
 });
 
-const homeRef = ref<HTMLElement | null>(null); // 主页Ref
+const backgroundRef = ref<HTMLElement | null>(null); // 主页Ref
 const selectedTab = ref<string>(""); // 当前选中tab
 const isShowTab = ref<boolean>(true); // 是否显示tab
 
@@ -36,7 +36,7 @@ const setBackgroundColor = (
   color: string = "var(--background-color)",
   transitionTime: number = 3,
 ) => {
-  const target = homeRef.value;
+  const target = backgroundRef.value;
   if (!target) return;
   target.style.backgroundColor = color;
   target.style.transition = `background ${transitionTime}s`;
@@ -58,7 +58,10 @@ const setTabBarSelectedValue = (focusScopeId: string) => {
 // 初始化数据
 const initData = () => {
   // 默认聚焦"立即聆听"
-  setTabBarSelectedValue("listen-now");
+  // setTabBarSelectedValue("listen-now");
+
+  // TODO del
+  setTabBarSelectedValue("playing-now");
 };
 
 onMounted(() => {
@@ -75,9 +78,10 @@ provide("home-context", {
 </script>
 
 <template>
-  <div class="home" ref="homeRef">
+  <div class="home">
     <TabBar :selectedTab="selectedTab" v-show="isShowTab" />
     <TabPane />
+    <div class="background" ref="backgroundRef"></div>
   </div>
 </template>
 
@@ -85,6 +89,15 @@ provide("home-context", {
 .home {
   min-height: var(--app-height, 100vh);
   position: relative;
-  background: var(--background-color);
+
+  .background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -5;
+    background: var(--background-color);
+  }
 }
 </style>

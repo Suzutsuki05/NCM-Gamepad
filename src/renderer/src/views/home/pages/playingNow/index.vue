@@ -8,15 +8,16 @@ import focusManager from "@renderer/core/gamepad/focus/focusManager";
 
 import type { HomeContext } from "../../typing";
 
+import cover from "@renderer/assets/image/cover3.jpg";
 import ProgressBar from "./components/ProgressBar.vue";
+import AlbumBackground from "./components/AlbumBackground.vue";
+import { focusScopeId as tabBarFocusScopeId } from "@renderer/views/home/components/TabBar/config.data";
 import {
   focusScopeId,
   buttonPrefixName,
   subButtonPrefixName,
   songItemPrefixName,
 } from "./config.data";
-import { focusScopeId as tabBarFocusScopeId } from "@renderer/views/home/components/TabBar/config.data";
-import cover from "@renderer/assets/image/cover3.jpg";
 
 const { inputCallback, unsubscribe } = useInputCallback(focusScopeId);
 const { horizontalScroll } = useHorizontalScroll();
@@ -57,6 +58,7 @@ const clearShowSongSubButtonTimer = () => {
   showSongSubButtonTimer = undefined;
 };
 
+// TODO del
 // 设置背景色
 const onSetBackgroundColor = () => {
   if (selectedTab.value === `${tabBarFocusScopeId}-${focusScopeId}`) {
@@ -70,7 +72,7 @@ const onSetBackgroundColor = () => {
 watch(
   () => selectedTab.value,
   () => {
-    onSetBackgroundColor();
+    // onSetBackgroundColor();
   },
 );
 
@@ -194,6 +196,7 @@ provideFocusScope(focusScopeId);
     >
       <ProgressBar />
     </div>
+    <AlbumBackground />
   </div>
 </template>
 
@@ -256,13 +259,13 @@ provideFocusScope(focusScopeId);
   .song-list-wrap {
     width: 100%;
     position: absolute;
-    top: calc(50% + 21px);
+    top: calc(50% + 21px - 8px);
     transform: translateY(-50%);
 
     .song-list {
       --song-cover-size: 372px;
       --song-gap: 29px;
-      padding-top: 20px;
+      padding-top: 28px;
       padding-bottom: 61px;
 
       width: 100%;
