@@ -55,10 +55,9 @@ onMounted(() => {
   background: var(--background-color);
 
   .title {
-    color: #fff;
-    // TODO 文字大小待定
-    font-size: 32px;
-    font-weight: bold;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 38px;
+    font-weight: 500;
   }
 }
 </style>
