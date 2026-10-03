@@ -4,6 +4,8 @@
   <div class="progress-bar">
     <div class="bar"></div>
     <div class="time-remaining">
+      <!-- TODO 时间如果发生碰撞，直接展示剩余时间，也就是右边那个 -->
+      <!-- TODO 或者想想别的办法 -->
       <div class="time-value">-02:48</div>
     </div>
     <div class="time-current">

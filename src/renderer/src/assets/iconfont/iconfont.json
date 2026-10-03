@@ -6,6 +6,20 @@
   "description": "适配手柄操作，更加简约的网易云音乐",
   "glyphs": [
     {
+      "icon_id": "48628128",
+      "name": "play",
+      "font_class": "play",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "33711681",
+      "name": "play-random",
+      "font_class": "play-random",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
       "icon_id": "47523199",
       "name": "setting",
       "font_class": "setting",

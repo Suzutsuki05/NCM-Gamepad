@@ -15,7 +15,7 @@ const handleConfirm = () => {
     id: "114514",
     title: "two",
     fromRoutePath: "/home",
-    toRoutePath: "/album-details",
+    toRoutePath: "/song-details",
   });
 };
 </script>

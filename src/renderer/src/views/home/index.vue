@@ -55,13 +55,10 @@ const setTabBarSelectedValue = (focusScopeId: string) => {
   );
 };
 
-// 初始化数据
+// 初始化配置
 const initData = () => {
   // 默认聚焦"立即聆听"
-  // setTabBarSelectedValue("listen-now");
-
-  // TODO del
-  setTabBarSelectedValue("playing-now");
+  setTabBarSelectedValue("listen-now");
 };
 
 onMounted(() => {
