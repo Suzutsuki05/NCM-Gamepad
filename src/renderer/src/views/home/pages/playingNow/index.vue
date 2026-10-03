@@ -122,6 +122,7 @@ const down = () => {
 const back = () => {
   setTabBarVisible(true);
   isShowNonPrimaryContent.value = false;
+  isShowSongSubButton.value = false;
   setTabBarSelectedValue(focusScopeId);
 };
 
